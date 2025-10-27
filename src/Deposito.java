@@ -16,7 +16,7 @@ public class Deposito {
         for (int i = 0; i < productos.length; i++) {
             for (int j = 0; j < productos[i].length; j++) {
                 if (productos[i][j] != null) {
-                    deposito.append(productos[i][j].getNombre() + "[" + i + "]" + "[" + j + "]" + productos[i][j].getCantidad() + "\n");
+                    deposito.append(productos[i][j].getNombre() + "[" + i + "]" + "[" + j + "]" + " /Cantidad: " + productos[i][j].getCantidad() + "\n");
                 }
             }
         }

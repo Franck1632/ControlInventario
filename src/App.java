@@ -98,6 +98,7 @@ public class App {
                     break;
 
                 case 2:
+                    System.out.println("========== DEPÓSITO " + deposito.getNombre() + " ==========");
                     System.out.println(deposito.mostrarDeposito());
                     deposito.generarAlertas();
                     break;
