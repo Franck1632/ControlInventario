@@ -1,12 +1,14 @@
+import java.time.LocalDate;
+
 public abstract class ProductoBase {
     protected String nombre;
     protected int cantidad;
-    protected String fecha;
-    protected int precio;
+    protected LocalDate fecha;
+    protected double precio;
 
 
 
-    public ProductoBase(String nombre, int cantidad, String fecha, int precio) {
+    public ProductoBase(String nombre, int cantidad, LocalDate fecha, double precio) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -29,19 +31,19 @@ public abstract class ProductoBase {
         this.cantidad = cantidad;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

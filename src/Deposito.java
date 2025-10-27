@@ -1,18 +1,22 @@
 public class Deposito {
 
-    private ProductoBase[][] productos = new ProductoBase[3][3];
+    private ProductoBase[][] productos;
     private String nombre;
 
     public Deposito(String nombre) {
         this.nombre = nombre;
     }
 
+    public void crearDeposito(int filas, int columnas) {
+        productos = new ProductoBase[filas][columnas];
+    }
+
     public String mostrarDeposito() {
         StringBuilder deposito = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < productos.length; i++) {
+            for (int j = 0; j < productos[i].length; j++) {
                 if (productos[i][j] != null) {
-                    deposito.append(productos[i][j].getNombre() + "\n");
+                    deposito.append(productos[i][j].getNombre() + "[" + i + "]" + "[" + j + "]" + productos[i][j].getCantidad() + "\n");
                 }
             }
         }
@@ -32,13 +36,13 @@ public class Deposito {
     }
 
     public void agregarProducto(int fila, int col, ProductoBase producto) {
-        if (fila < 0 || fila >= 3 || col < 0 || col >= 3) {
+        if (fila < 0 || fila >= productos.length || col < 0 || col >= productos[0].length) {
             System.out.println("Ubicación inexistente en el depósito " + nombre);
             return;
         }
 
         if (productos[fila][col] != null) {
-            System.out.println("Ya existe un producto en esa ubicación. Retíralo primero.");
+            System.out.println("Ya existe un producto en esa ubicación.");
             return;
         }
 
@@ -49,23 +53,49 @@ public class Deposito {
 
         productos[fila][col] = producto;
         System.out.println("Producto agregado correctamente en el depósito " + nombre);
+        System.out.println(producto.toString());
     }
 
-    public boolean estaLleno() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (productos[i][j] == null) {
-                    return false;
+    public boolean modificarCantidad(String nombre, int cantidad, int operacion) {
+        ProductoBase aux = getProducto(nombre);
+        if (aux == null) {
+            System.out.println("Producto no existe");
+            return false;
+        }
+
+
+        if (operacion == 1) {
+            aux.setCantidad(aux.getCantidad() + cantidad);
+            System.out.println("Nueva cantidad: " + aux.getCantidad() + "\n" + "Valor agragado:" + cantidad * aux.getPrecio() + "\n" + "Valor total del espacio: " + aux.getCantidad() * aux.getPrecio());
+
+            return true;
+        } else if (operacion == 0 && aux.getCantidad() >= cantidad) {
+            aux.setCantidad(aux.getCantidad() - cantidad);
+            System.out.println("Nueva cantidad: " + aux.getCantidad() + "\n" + "Valor reducido: " + cantidad * aux.getPrecio()+ "\n" + "Valor total del espacio: " + aux.getCantidad() * aux.getPrecio());
+            return true;
+        }else{
+            System.out.println("El stock no alcanza, disponibles: " + aux.getCantidad());
+        }
+        return false;
+    }
+
+    public ProductoBase getProducto(String nombre) {
+        for (int i = 0; i < productos.length; i++) {
+            for (int j = 0; j < productos[i].length; j++) {
+                if (productos[i][j].getNombre().equals(nombre)) {
+                    return productos[i][j];
+
                 }
             }
         }
-        return true;
+        return null;
+
     }
 
     public void generarAlertas() {
         System.out.println("\n--- ALERTAS DEL DEPÓSITO " + nombre + " ---");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < productos.length; i++) {
+            for (int j = 0; j < productos[0].length; j++) {
                 if (productos[i][j] == null) {
                     System.out.println("Ubicación vacía en fila " + i + ", columna " + j);
                 }
